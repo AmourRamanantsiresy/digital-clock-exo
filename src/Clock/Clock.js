@@ -1,40 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-
 import "./Clock.css";
 
-export class ClockClassComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { date: new Date(), timer: null };
-  }
-
-  componentDidMount() {
-    this.setState({
-      timer: setInterval(() => this.setState({ date: new Date() }), 1000),
-    });
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.timer);
-  }
-
-  padStartDigit(digit) {
-    return digit.toString().padStart(2, "0");
-  }
-
-  render() {
-    return (
-      <div className="clock">
-        <span>{this.padStartDigit(this.state.date.getHours())}: </span>
-        <span>{this.padStartDigit(this.state.date.getMinutes())}: </span>
-        <span>{this.padStartDigit(this.state.date.getSeconds())}</span>
-      </div>
-    );
-  }
-}
-
-export function Clock() {
+export default function Clock() {
   const [date, setDate] = useState(new Date());
   let timerId;
 
@@ -47,7 +15,9 @@ export function Clock() {
       setDate(new Date());
     }, 1000);
 
-    return () => clearInterval(timerId);
+    return () => {
+      clearInterval(timerId);
+    }
   });
 
   return (
